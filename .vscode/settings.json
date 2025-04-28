@@ -26,6 +26,7 @@
   "workbench.statusBar.visible": true,
   "C_Cpp.clang_format_fallbackStyle": "none",
   "editor.wordWrap": "on",
+  "editor.defaultFormatter": "ms-vscode.cpptools",
   "files.associations": {
     "array": "cpp",
     "atomic": "cpp",
