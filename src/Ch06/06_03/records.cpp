@@ -1,5 +1,6 @@
 #include "records.h"
 #include <iostream>
+#include <fstream>
 
 Student::Student(int the_id, std::string the_name){
     id = the_id;
@@ -106,14 +107,74 @@ std::string StudentRecords::get_course_name(int cid) const{
 }
 
 void StudentRecords::report_card(int sid){
+    std::ofstream outFile;
+    outFile.open("report.txt");
+
     float points = 0.0f, credits = 0.0f;
-    std::cout << std::endl << "Report Card for " << get_student_name(sid) << std::endl;
+    outFile << std::endl << "Report Card for " << get_student_name(sid) << std::endl;
     for (Grade& grd : grades)
         if (grd.get_student_id() == sid){
-            std::cout << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << std::endl;
+            outFile << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << std::endl;
             unsigned char current_credits = get_course_credits(grd.get_course_id());
             credits += current_credits;
             points += get_num_grade(grd.get_grade()) * current_credits;
         }
-    std::cout << "GPA: " << (points / credits) << std::endl;
+    outFile << "GPA: " << (points / credits) << std::endl;
+    outFile.close();
+}
+
+void StudentRecords::read_files(){
+    std::ifstream inFile;
+
+    // Read student data
+    inFile.open("students.txt");
+    while (!inFile.eof()){
+        std::string line;
+        int id;
+        std::string name;
+
+        getline(inFile,line);
+        id = std::stoi(line);
+        getline(inFile,name);
+        
+        add_student(id,name);
+    }
+    inFile.close();
+
+    // Read course data
+    inFile.open("courses.txt");
+    while (!inFile.eof()){
+        std::string line;
+        int id;
+        std::string name;
+        int credits;
+
+        getline(inFile,line);
+        id = std::stoi(line);
+        getline(inFile,name);
+        getline(inFile,line);
+        credits = std::stoi(line);
+        
+        add_course(id,name,credits);
+    }
+    inFile.close();
+
+    // Read grade data
+    inFile.open("grades.txt");
+    while (!inFile.eof()){
+        std::string line;
+        int sid;
+        int cid;
+        char grade;
+
+        getline(inFile,line);
+        sid = std::stoi(line);
+        getline(inFile,line);
+        cid = std::stoi(line);
+        getline(inFile,line);
+        grade = line[0];
+        
+        add_grade(sid,cid,grade);
+    }
+    inFile.close();
 }

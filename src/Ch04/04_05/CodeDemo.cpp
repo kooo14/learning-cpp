@@ -28,7 +28,26 @@ int main(){
     // Write your code here
 
     std::string student_str;
-    student_str = students[0].get_name(); // Change this to the selected student's name
+    int total_credit = 0;
+    student_str = "None";
+    for(auto ts : students){
+        if(ts.get_id() == id){
+            student_str = ts.get_name();
+            break;
+        }
+    }
+
+    for(auto tg: grades){
+        if(tg.get_student_id() == id){
+            for(auto tc:courses){
+                if(tc.get_id() == tg.get_course_id()){
+                    GPA += tc.get_credits() * tg.get_grade_score();
+                    total_credit += tc.get_credits();
+                }
+            }
+        }
+    }
+    GPA /= total_credit;
 
     std::cout << "The GPA for " << student_str << " is " << GPA << std::endl;
     

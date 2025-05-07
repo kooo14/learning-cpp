@@ -37,4 +37,5 @@ public:
     int get_student_id() const;
     int get_course_id() const;
     char get_grade() const;
+    int get_grade_score() const;
 };

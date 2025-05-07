@@ -12,7 +12,8 @@ int main(){
     int id;
     StudentRecords SR;
     
-    initialize(SR);
+    // initialize(SR);
+    SR.read_files();
 
     std::cout << "Enter a student ID: " << std::flush;
     std::cin >> id;

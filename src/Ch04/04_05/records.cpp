@@ -41,3 +41,29 @@ int Grade::get_course_id() const{
 char Grade::get_grade() const{
     return grade;
 }
+int Grade::get_grade_score() const{
+    int score = 0;
+    switch (grade)
+    {
+    case 'A':
+        score = 4;
+        break;
+    case 'B':
+        score = 3;
+        break;
+    case 'C':
+        score = 2;
+        break;
+    case 'D':
+        score = 1;
+        break;
+    case 'F':
+        score = 0;
+        break;
+    
+    default:
+        break;
+    }
+
+    return score;
+}
